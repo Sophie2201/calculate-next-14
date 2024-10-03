@@ -3,7 +3,8 @@ import Button from "@/components/button";
 import { LineButtons } from "@/components/content-button";
 import Display from "@/components/display";
 import RadioGroup, { RadioList } from "@/components/radio-group";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { CalculateHook } from "@/core/hooks/CalculateHook";
 
 type ButtonConfig = {
   buttonsPrimary?:Array<string>,
@@ -81,6 +82,20 @@ const systems: Array<System> = [
 ];
 
 export default function Home() {
+
+  const { sum, subtract, multiply, division } = CalculateHook();
+  const [result, setResult] = useState<number | undefined>(0);
+
+  useEffect(() => {
+    console.log('Adicionando: ', sum(5, 3));
+    console.log('Subtraindo: ', subtract(10, 4));
+    console.log('Multiplicando: ', multiply(6, 2));
+    console.log('Dividindo: ', division(8, 2));
+    console.log('Dividindo por zero: ', division(8, 0));
+  }, [sum, subtract, multiply, division]);
+
+  
+
   const [idSystem, setIdSystem] = useState(0);
   
   function getSystem(): System {
